@@ -1,0 +1,3 @@
+module go-weather-app
+
+go 1.21.6
