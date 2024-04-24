@@ -8,14 +8,20 @@ import (
 )
 
 type WeatherData struct {
-	Main Main `json:"main"`
-	Wind Wind `json:"wind"`
+	Main  Main  `json:"main"`
+	Coord Coord `json:"coord"`
+	Wind  Wind  `json:"wind"`
 }
 
 type Main struct {
 	Temp     float64 `json:"temp"`
 	Pressure float64 `json:"pressure"`
 	Humidity float64 `json:"humididty"`
+}
+
+type Coord struct {
+	Lon float64 `json:"lon"`
+	Lat float64 `json:"lat"`
 }
 
 type Wind struct {
