@@ -6,14 +6,16 @@ import (
 )
 
 // RetrieveLocation makes an API-call to ip-api to recieve data on users whereabouts
-func RetrieveLocation(address string) (*http.Request, error) {
+func RetrieveLocation(address string) *http.Request {
 	req, err := http.NewRequest(http.MethodGet, address, nil)
 	if err != nil {
 		fmt.Printf("Bad request %d", http.StatusBadRequest)
-		return &http.Request{}, err
+		return &http.Request{}
 	}
+
 	params := req.URL.Query()
-	params.Add("fields", "lat")
-	params.Add("fields", "lon")
-	return req, nil
+	params.Add("fields", "lat,lon")
+	req.URL.RawQuery = params.Encode()
+
+	return req
 }

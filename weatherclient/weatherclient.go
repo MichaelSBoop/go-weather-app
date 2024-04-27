@@ -16,9 +16,8 @@ type Coords struct {
 }
 
 type WeatherData struct {
-	Main  Main  `json:"main"`
-	Coord Coord `json:"coord"`
-	Wind  Wind  `json:"wind"`
+	Main Main `json:"main"`
+	Wind Wind `json:"wind"`
 }
 
 type Main struct {
@@ -31,44 +30,44 @@ type Wind struct {
 	Speed float64 `json:"speed"`
 }
 
-func CallForData() {
+func CallForData() []byte {
 	var coords Coords
 	var weatherData WeatherData
 	client := &http.Client{}
 	locationResponse, err := client.Do(location.RetrieveLocation("http://ip-api.com/json/"))
 	if err != nil {
 		fmt.Printf("Bad Location Request %d", http.StatusBadRequest)
-		return
+		return []byte{}
 	}
 	defer locationResponse.Body.Close()
-	body, err := io.ReadAll(locationResponse.Body)
+	locationBody, err := io.ReadAll(locationResponse.Body)
 	if err != nil {
 		fmt.Println("Failed to parse response")
-		return
+		return []byte{}
 	}
-	if err = json.Unmarshal([]byte(body), &location); err != nil {
+	if err = json.Unmarshal([]byte(locationBody), &coords); err != nil {
 		fmt.Println("Failed to unmarshal data", err)
-		return
+		return []byte{}
 	}
-	weatherResponnse, err := client.Do(weather.RetrieveWeather(location.Lat, location.Lon))
+	weatherResponnse, err := client.Do(weather.RetrieveWeather(coords.Lat, coords.Lon))
 	if err != nil {
 		fmt.Printf("Bad Weather Request %d", http.StatusBadRequest)
-		return
+		return []byte{}
 	}
-	defer data.Body.Close()
-	body, err := io.ReadAll(data.Body)
+	defer weatherResponnse.Body.Close()
+	weatherBody, err := io.ReadAll(weatherResponnse.Body)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return &http.Request{}, err
+		fmt.Println("Failed to parse response")
+		return []byte{}
 	}
-
-	if err = json.Unmarshal(body, &weatherData); err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return &http.Request{}, err
+	if err = json.Unmarshal(weatherBody, &weatherData); err != nil {
+		fmt.Println("Failed to unmarshal data", err)
+		return []byte{}
 	}
 	resp, err := json.Marshal(&weatherData)
 	if err != nil {
-		http.Error(err.Error(), http.StatusBadRequest)
-		return &http.Request{}, err
+		fmt.Println("Failed to marshal data", err)
+		return []byte{}
 	}
+	return resp
 }

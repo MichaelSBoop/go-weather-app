@@ -8,7 +8,7 @@ import (
 )
 
 func handleData(w http.ResponseWriter, r *http.Request) {
-	data := weatherclient.CallForData
+	data := weatherclient.CallForData()
 	w.Header().Add("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	w.Write(data)
