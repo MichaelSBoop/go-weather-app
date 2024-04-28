@@ -1,4 +1,4 @@
-module weatherclient
+module retriever
 
 replace location => ../location
 

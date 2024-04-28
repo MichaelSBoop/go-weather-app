@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"net/http"
 
-	"weatherclient"
+	"retriever"
 )
 
 func handleData(w http.ResponseWriter, r *http.Request) {
-	data := weatherclient.CallForData()
+	data := retriever.RetrieveData()
 	w.Header().Add("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	w.Write(data)

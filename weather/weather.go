@@ -6,7 +6,7 @@ import (
 	"strconv"
 )
 
-func RetrieveWeather(lat, lon float64) *http.Request {
+func GetWeather(lat, lon float64) *http.Request {
 	req, err := http.NewRequest(http.MethodGet, "https://api.openweathermap.org/data/2.5/weather", nil)
 	if err != nil {
 		fmt.Printf("Bad request %d", http.StatusBadRequest)
