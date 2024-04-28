@@ -8,7 +8,9 @@ import (
 )
 
 func handleData(w http.ResponseWriter, r *http.Request) {
-	data := ret.RetrieveData()
+	query := r.URL.Query()
+	key := query.Get("key")
+	data := ret.RetrieveData(key)
 	w.Header().Add("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	w.Write(data)

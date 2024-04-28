@@ -32,7 +32,7 @@ type Wind struct {
 	Speed float64 `json:"speed"`
 }
 
-func RetrieveData() []byte {
+func RetrieveData(key string) []byte {
 	var coords Coords
 	var weatherData WeatherData
 	client := &http.Client{}
@@ -51,7 +51,7 @@ func RetrieveData() []byte {
 		fmt.Println("Failed to unmarshal data", err)
 		return []byte{}
 	}
-	weatherResponnse, err := client.Do(weather.GetWeather(coords.Lat, coords.Lon))
+	weatherResponnse, err := client.Do(weather.GetWeather(coords.Lat, coords.Lon, key))
 	if err != nil {
 		fmt.Printf("Bad Weather Request %d", http.StatusBadRequest)
 		return []byte{}
