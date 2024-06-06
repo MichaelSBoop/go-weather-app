@@ -22,5 +22,4 @@ func main() {
 		fmt.Println("Ошибка запуска сервера")
 		return
 	}
-	fmt.Println("Hello, world!")
 }
