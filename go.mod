@@ -2,9 +2,9 @@ module go-weather-app
 
 replace retriever => ./retriever
 
-replace location => ./location
-
 replace weather => ./weather
+
+replace location => ./location
 
 go 1.21.6
 

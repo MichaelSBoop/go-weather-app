@@ -12,8 +12,8 @@ import (
 
 type Coords struct {
 	City string  `json:"city,omitempty"`
-	Lat  float64 `json:"latitude"`
-	Lon  float64 `json:"longitude"`
+	Lat  float64 `json:"lat"`
+	Lon  float64 `json:"lon"`
 }
 
 type WeatherData struct {
@@ -33,7 +33,6 @@ type Wind struct {
 }
 
 func RetrieveData(key string) []byte {
-	var coords Coords
 	var weatherData WeatherData
 	client := &http.Client{}
 	locationResponse, err := client.Do(location.GetLocation("http://ip-api.com/json/"))
@@ -47,11 +46,11 @@ func RetrieveData(key string) []byte {
 		fmt.Println("Failed to parse response")
 		return []byte{}
 	}
-	if err = json.Unmarshal([]byte(locationBody), &coords); err != nil {
+	if err = json.Unmarshal([]byte(locationBody), &weatherData.Coords); err != nil {
 		fmt.Println("Failed to unmarshal data", err)
 		return []byte{}
 	}
-	weatherResponnse, err := client.Do(weather.GetWeather(coords.Lat, coords.Lon, key))
+	weatherResponnse, err := client.Do(weather.GetWeather(weatherData.Coords.Lat, weatherData.Coords.Lon, key))
 	if err != nil {
 		fmt.Printf("Bad Weather Request %d", http.StatusBadRequest)
 		return []byte{}
