@@ -6,8 +6,8 @@ import (
 	"io"
 	"net/http"
 
-	"location"
-	"weather"
+	"go-weather-app/location"
+	"go-weather-app/weather"
 )
 
 type Coords struct {

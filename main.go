@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	ret "retriever"
+	ret "go-weather-app/retriever"
 )
 
 func handleData(w http.ResponseWriter, r *http.Request) {
