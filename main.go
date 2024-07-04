@@ -19,7 +19,7 @@ func handleData(w http.ResponseWriter, r *http.Request) {
 func main() {
 	http.HandleFunc("/weather", handleData)
 	if err := http.ListenAndServe(":8080", nil); err != nil {
-		fmt.Println("Ошибка запуска сервера")
+		fmt.Println("Server error")
 		return
 	}
 }
