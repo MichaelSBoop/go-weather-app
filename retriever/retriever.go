@@ -25,7 +25,7 @@ type WeatherData struct {
 type Main struct {
 	Temp     float64 `json:"temp"`
 	Pressure float64 `json:"pressure"`
-	Humidity float64 `json:"humididty"`
+	Humidity float64 `json:"humidity"`
 }
 
 type Wind struct {
@@ -50,13 +50,13 @@ func RetrieveData(key string) []byte {
 		fmt.Println("Failed to unmarshal data", err)
 		return []byte{}
 	}
-	weatherResponnse, err := client.Do(weather.GetWeather(weatherData.Coords.Lat, weatherData.Coords.Lon, key))
+	weatherResponse, err := client.Do(weather.GetWeather(weatherData.Coords.Lat, weatherData.Coords.Lon, key))
 	if err != nil {
 		fmt.Printf("Bad Weather Request %d", http.StatusBadRequest)
 		return []byte{}
 	}
-	defer weatherResponnse.Body.Close()
-	weatherBody, err := io.ReadAll(weatherResponnse.Body)
+	defer weatherResponse.Body.Close()
+	weatherBody, err := io.ReadAll(weatherResponse.Body)
 	if err != nil {
 		fmt.Println("Failed to parse response")
 		return []byte{}
